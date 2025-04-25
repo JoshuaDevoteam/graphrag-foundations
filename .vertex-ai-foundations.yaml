@@ -1,0 +1,7 @@
+rm-path: "/Users/joshuavink/Devoteam/foundations/cloud-foundations/cloud_foundations/resource-manager"
+iam-path: "/Users/joshuavink/Devoteam/foundations/cloud-foundations/cloud_foundations/iam"
+modules-path: "/Users/joshuavink/Devoteam/foundations/cloud-foundations/cloud_foundations/modules"
+
+folder-namespace: "fo"
+project-namespace: "pj"
+service-account-namespace: "sa"

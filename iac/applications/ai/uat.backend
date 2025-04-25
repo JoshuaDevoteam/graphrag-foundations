@@ -1,0 +1,3 @@
+bucket  = "gcs-tf-state-pj-joshua-foundations-mid"
+prefix  = "static.tfstate.d"
+impersonate_service_account = "sa-terraform@pj-joshua-foundations-mid.iam.gserviceaccount.com"
