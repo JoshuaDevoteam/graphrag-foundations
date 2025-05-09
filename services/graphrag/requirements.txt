@@ -1,0 +1,11 @@
+uvicorn==0.24.0
+fastapi==0.95.2
+langchain==0.1.0
+langserve==0.0.36
+sse_starlette==1.8.2
+vertexai==0.0.1
+google-cloud-aiplatform==1.37.0
+google-cloud-storage==2.13.0
+chromadb==0.4.18
+langchainhub==0.1.14
+unstructured[all-docs]

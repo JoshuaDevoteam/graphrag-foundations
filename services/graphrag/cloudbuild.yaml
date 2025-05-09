@@ -1,0 +1,33 @@
+steps:
+  - name: "gcr.io/cloud-builders/docker"
+    dir: "services/graphrag"
+    entrypoint: bash
+    args:
+      - "-c"
+      - |
+        branch_name=$BRANCH_NAME
+        branch=${branch_name//\//-}
+        docker build -t ${_ARTIFACT_REGISTRY_CONTAINERS_URL}/graphrag:latest -t ${_ARTIFACT_REGISTRY_CONTAINERS_URL}/graphrag:$SHORT_SHA -t ${_ARTIFACT_REGISTRY_CONTAINERS_URL}/graphrag:$branch --network=cloudbuild .
+
+  - name: 'gcr.io/cloud-builders/docker'
+    dir: "services/graphrag"
+    entrypoint: docker
+    args: [
+      "push",
+      "-a",
+      "${_ARTIFACT_REGISTRY_CONTAINERS_URL}/graphrag",
+    ]
+
+  - name: "gcr.io/google.com/cloudsdktool/cloud-sdk"
+    dir: "services/graphrag"
+    entrypoint: gcloud
+    args:
+      - run
+      - deploy
+      - "graphrag"
+      - --image=${_ARTIFACT_REGISTRY_CONTAINERS_URL}/graphrag:${SHORT_SHA}
+      - --region=${_REGION}
+      - --project=$PROJECT_ID
+
+options:
+  logging: CLOUD_LOGGING_ONLY

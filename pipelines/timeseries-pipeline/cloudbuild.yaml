@@ -1,0 +1,39 @@
+steps:
+
+  # Prepare serving container
+  - name: "gcr.io/cloud-builders/docker"
+    dir: "services/timeseries-pipeline"
+    entrypoint: bash
+    args:
+      - "-c"
+      - |
+        branch_name=$BRANCH_NAME
+        branch=${branch_name//\//-}
+        docker build -t ${_ARTIFACT_REGISTRY_CONTAINERS_URL}/timeseries-pipeline:latest -t ${_ARTIFACT_REGISTRY_CONTAINERS_URL}/timeseries-pipeline:$SHORT_SHA -t ${_ARTIFACT_REGISTRY_CONTAINERS_URL}/timeseries-pipeline:$branch --network=cloudbuild .
+
+  - name: "gcr.io/cloud-builders/docker"
+    dir: "services/timeseries-pipeline"
+    entrypoint: docker
+    args:
+      ["push", "-a", "${_ARTIFACT_REGISTRY_CONTAINERS_URL}/timeseries-pipeline"]
+
+  # Install pipeline requirements
+  - name: "python:3.11"
+    id: "pipeline-init"
+    entrypoint: "pip3"
+    args: ["install", "-r", "requirements.txt", "--user"]
+    dir: 'pipelines/timeseries-pipeline'
+
+  - name: "python:3.11"
+    id: "pipeline-build"
+    entrypoint: bash
+    args:
+      - '-c'
+      - |
+        branch_name=$BRANCH_NAME
+        branch=${branch_name//\//-}
+        python pipeline.py --project $PROJECT_ID --region ${_REGION} --pipeline-name timeseries-pipeline --pipeline-file /workspace/pipeline.yaml --artifact-registry-url ${_ARTIFACT_REGISTRY_TEMPLATES_URL} -t latest $SHORT_SHA $branch
+    dir: 'pipelines/timeseries-pipeline'
+
+options:
+  logging: CLOUD_LOGGING_ONLY
