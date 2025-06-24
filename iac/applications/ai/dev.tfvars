@@ -39,8 +39,8 @@ buckets = {
 }
 environment = ""
 project_id = "pj-joshua-foundations-test"
-repo_name = "joshua-foundations"
-repo_owner = "devoteamgcloud"
+repo_name = "graphrag-foundations"
+repo_owner = "JoshuaDevoteam"
 region = "europe-west1"
 service_accounts = {
   terraform = {

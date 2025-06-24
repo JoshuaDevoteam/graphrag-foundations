@@ -1,0 +1,18 @@
+[project]
+name = "graphrag"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "google-cloud-spanner>=3.54.0",
+    "langchain>=0.3.25",
+    "langchain-community>=0.3.24",
+    "langchain-google-vertexai>=2.0.24",
+    "setuptools>=80.7.1",
+    "sqlalchemy>=2.0.41",
+    "sqlalchemy-spanner>=1.11.0",
+    "streamlit>=1.45.1",
+    "streamlit-agraph>=0.0.45",
+    "watchdog>=6.0.0",
+]

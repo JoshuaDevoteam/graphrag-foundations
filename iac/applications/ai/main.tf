@@ -77,3 +77,12 @@ module "artifact_repository" {
   artifact_registry_description    = each.value.description
   artifact_registry_role_group_map = each.value.role_group_map
 }
+
+resource "google_spanner_instance" "graph" {
+  name         = "graph"
+  display_name = "Graph Instance"
+  config       = "regional-${var.region}"
+  num_nodes    = 1
+  project      = var.project_id
+  edition      = "ENTERPRISE"
+}
